@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <form action="~/Home/login" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="username" type="text" class="form-control" name="username" placeholder="Tài khoản">
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-eye-close"></i></span>
+                        <input id="password" type="password" class="form-control" name="password" placeholder="Mật khẩu">
+                    </div>
+                    <br />
+                    <input class="btn btn-lg btn-success btn-block" type="submit" value="Đăng nhập">
+                </form>
+                <br />
+                <p class="pt-3 mb-0 text-right">
+                    <span>Chưa có tài khoản? </span>
+                    <a href="~/Home/Register" class="font-weight-bold">Đăng ký</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+

@@ -1,0 +1,245 @@
+﻿@using WebSite.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<NhaSX> nhasx = (List<NhaSX>)ViewData["NhaSX"];
+    List<LoaiSP> loaisp = (List<LoaiSP>)ViewData["LoaiSP"];
+    List<SanPham> lst = (List<SanPham>)ViewData["list"];
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-sx-6">
+                        Danh Sách Sản Phẩm
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-sx-6 text-right">
+                        <button type="button" class="btn btn-info btn-sm" id="add" data-toggle="modal" data-target="#myModal">Thêm mới</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <!-- Table -->
+                <table class="table table-striped table-bordered table-hover" id="dataTables">
+                    <thead>
+                        <tr class="text-center">
+                            <th width="10%"></th>
+                            <th width="8%">STT</th>
+                            <th>Tên SP</th>
+                            <th>Nhà SX</th>
+                            <th>Loại SP</th>
+                            <th class="hidden-xs">Giá bán</th>
+                            <th class="hidden-xs">Số lượng</th>
+                            <th class="hidden-xs">Bảo Hành</th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < lst.Count; i++)
+                        {
+                            <tr class="text-center" id="@lst[i].MaSP">
+                                <td>
+                                    <button class="btn btn-default btn-sm" id="edit" data-toggle="modal" data-target="#myModal" value="@lst[i].MaSP"><em class="glyphicon glyphicon-edit"></em></button>
+                                    <button class="btn btn-danger btn-sm" id="delete" data-toggle="modal" data-target="#Modal2" value="@lst[i].MaSP"><em class="glyphicon glyphicon-trash"></em></button>
+                                </td>
+                                <td>@(i + 1)</td>
+                                <td>@lst[i].TenSP</td>
+                                <td>@lst[i].TenSX</td>
+                                <td>@lst[i].TenLoai</td>
+                                <td class="hidden-xs">@lst[i].GiaSP</td>
+                                <td class="hidden-xs">@lst[i].SoLuong</td>
+                                <td class="hidden-xs">@lst[i].BaoHanh</td>
+                                <td style="display:none;">@lst[i].MaHinh</td>
+                                <td style="display:none;">@lst[i].CPU</td>
+                                <td style="display:none;">@lst[i].Ram</td>
+                                <td style="display:none;">@lst[i].BoNho</td>
+                                <td style="display:none;">@lst[i].VGA</td>
+                                <td style="display:none;">@lst[i].Pin</td>
+                                <td style="display:none;">@lst[i].MaLoai</td>
+                                <td style="display:none;">@lst[i].MaSX</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal 1 -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <form action="~/Admin/SanPham/insertSanPham" method="post" id="form" enctype="multipart/form-data">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Thêm mới sản phẩm</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+                                    <input type="hidden" id="masp" name="ma" value="" />
+                                    <input type="text" class="form-control" id="tensp" name="tensp" placeholder="Tên sản phẩm">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>Loại SP:</label>
+                                        <select class="form-control" id="loaisp" name="loaisp">
+                                            @for (int i = 0; i < loaisp.Count; i++)
+                                            {
+                                                <option value="@loaisp[i].MaLoai">@loaisp[i].TenLoai</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Hãng Xản Xuât:</label>
+                                        <select class="form-control" id="sx" name="sx">
+                                            @for (int i = 0; i < nhasx.Count; i++)
+                                            {
+                                                <option value="@nhasx[i].MaSX">@nhasx[i].TenSX</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 form-group">
+                                        <label>Số Lượng:</label>
+                                        <input type="number" min="0" max="100" id="soluong" name="soluong" class="form-control" size="10" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label>Giá Bán: </label>
+                                        <input type="number" min="0" max="100000000" id="gia" name="gia" class="form-control" size="10" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label>Bảo hành: </label>
+                                        <input type="number" min="0" max="24" id="baohanh" name="baohanh" class="form-control" size="10" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label>Màn hình: </label>
+                                        <input type="number" min="8" max="100" step="0.1" id="manhinh" name="manhinh" class="form-control" size="10" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label>Pin: </label>
+                                        <input type="number" min="1" max="24" id="pin" name="pin" class="form-control" size="10" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label>Ram: </label>
+                                        <input type="number" min="1" max="24" id="ram" name="ram" class="form-control" size="10" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label>CPU:</label>
+                                        <input type="text" id="cpu" name="cpu" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>VGA:</label>
+                                        <input type="text" id="vga" name="vga" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>Bộ Nhớ:</label>
+                                        <input type="number" id="bonho" name="bonho" class="form-control" />
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                        <label for="comment">Mô tả:</label>
+                                        <textarea class="form-control" rows="6" name="mota"></textarea>
+                                    </div>*@
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="file" name="files" class="image-upload" accept="image/*" />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="file" name="files" class="image-upload" accept="image/*" />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="file" name="files" class="image-upload" accept="image/*" />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input type="file" name="files" class="image-upload" accept="image/*" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-info">Lưu</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal 2 -->
+            <div class="modal fade" id="Modal2" role="dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Xóa sản phẩm</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="noidung"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-danger" id="xoasp" href="#">Xóa</a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dataTables').DataTable({
+            responsive: true
+        });
+        $("table > tbody").on("click", "#edit", function () {
+            var ma = $(this).val();
+            var id = "#" + ma;
+            $("#masp").val(ma);
+            $("#tensp").val($(id).find("td:eq(2)").text().trim());
+            $("#loaisp").val($(id).find("td:eq(14)").text().trim());
+            $("#sx").val($(id).find("td:eq(15)").text().trim());
+            $("#soluong").val($(id).find("td:eq(6)").text().trim()); 
+            $("#gia").val($(id).find("td:eq(5)").text().trim());
+            $("#baohanh").val($(id).find("td:eq(7)").text().trim());
+            $("#manhinh").val($(id).find("td:eq(8)").text().trim());
+            $("#pin").val($(id).find("td:eq(13)").text().trim());
+            $("#ram").val($(id).find("td:eq(10)").text().trim());
+            $("#cpu").val($(id).find("td:eq(9)").text().trim());
+            $("#vga").val($(id).find("td:eq(12)").text().trim());
+            $("#bonho").val($(id).find("td:eq(11)").text().trim());
+            $("#form").attr('action', '../../Admin/SanPham/updateSanPham');
+        });
+        $("table > tbody").on("click", "#delete", function () {
+            var ma = $(this).val();
+            var id = "#" + ma;
+            var url = "../../Admin/SanPham/deleteSanPham/" + ma;
+            $("#xoasp").attr("href", url);
+            $("#noidung").text($(id).find("td:eq(3)").text().trim()+" "+$(id).find("td:eq(2)").text().trim());
+        });
+        $("#add").click(function () {
+            $("#masp").val("");
+            $("#tensp").val("");
+            $("#loaisp").val("");
+            $("#sx").val("");
+            $("#soluong").val("");
+            $("#gia").val("");
+            $("#baohanh").val("");
+            $("#manhinh").val("");
+            $("#pin").val("");
+            $("#ram").val("");
+            $("#cpu").val("");
+            $("#vga").val("");
+            $("#bonho").val("");
+            $("#form").attr('action', '../../Admin/SanPham/insertSanPham');
+        });
+    });
+
+</script>

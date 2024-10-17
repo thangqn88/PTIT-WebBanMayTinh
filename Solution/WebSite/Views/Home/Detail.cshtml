@@ -1,0 +1,65 @@
+﻿@using WebSite.Models;
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SanPham sp = (SanPham)ViewData["detail"];
+}
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body text-center">
+                <img src="~/Image/1000_0.png" width="420" class="img-thumbnail" alt="Cinque Terre">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body" style="padding-top: 10px">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" colspan="2">
+                                <h3 style="font-weight:bold">@sp.TenSX @sp.TenSP</h3>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="20%">Giá:</td>
+                            <td>@sp.GiaSP VND</td>
+                        </tr>
+                        <tr>
+                            <td>CPU: </td>
+                            <td>@sp.CPU</td>
+                        </tr>
+                        <tr>
+                            <td>RAM: </td>
+                            <td>@sp.Ram GB</td>
+                        </tr>
+                        <tr>
+                            <td>Ổ cứng: </td>
+                            <td>HDD @sp.BoNho GB</td>
+                        </tr>
+                        <tr>
+                            <td>Màn hình: </td>
+                            <td>@sp.MaHinh inch</td>
+                        </tr>
+                        <tr>
+                            <td>VGA: </td>
+                            <td>@sp.VGA</td>
+                        </tr>
+                        <tr>
+                            <td>Bảo hành: </td>
+                            <td>@sp.BaoHanh tháng</td>
+                        </tr>
+                        <tr>
+                            <td>Pin: </td>
+                            <td>@sp.Pin Cell</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-danger btn-block" href="~/GioHang/Add/@sp.MaSP">Đặt Hàng</a>
+            </div>
+        </div>
+    </div>
+</div>

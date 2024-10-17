@@ -1,0 +1,47 @@
+﻿@using WebSite.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<TaiKhoan> lst = (List<TaiKhoan>)ViewData["lst"];
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover" id="dataTables">
+            <thead>
+                <tr>
+                    <td>STT</td>
+                    <td>Họ Tên</td>
+                    <td>Tên đăng nhập</td>
+                    <td>Mật khẩu</td>
+                    <td>Email</td>
+                    <td>SĐT</td>
+                    <td>Địa chỉ</td>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < lst.Count; i++)
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@lst[i].HoTen</td>
+                        <td>@lst[i].TenTK</td>
+                        <td>@lst[i].MatKhau</td>
+                        <td>@lst[i].Email</td>
+                        <td>@lst[i].SDT</td>
+                        <td>@lst[i].DiaChi</td>
+                    </tr>
+                }
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dataTables').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
+

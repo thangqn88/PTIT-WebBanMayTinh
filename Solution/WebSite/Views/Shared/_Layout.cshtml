@@ -1,0 +1,88 @@
+﻿@using WebSite.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body style="background: #f1f1f1">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="~/Home/Index">Trang chủ</a></li>
+                    @if (Session["user"] == null)
+                    {
+                        <li><a href="~/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+                    }
+                    else
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> 
+                            <span class="glyphicon glyphicon-user"></span> @Session["name"]</a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="~/Home/Info"><span class="glyphicon glyphicon-user"></span> Thông tin tài khoản</a></li>
+                                <li><a href="~/GioHang/donHang"><span class="glyphicon glyphicon-th-large"></span> Danh sách đơn hàng</a></li>
+                                <li><a href="~/Home/Logout"><span class="glyphicon glyphicon-log-out"></span> Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                                    }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <span class="glyphicon glyphicon-shopping-cart"></span> Giỏ hàng</a>
+                        <ul class="dropdown-menu dropdown-cart" role="menu">
+                            @{List<GioHang> lst = (List<GioHang>)Session["cart"];}
+                            @if (lst != null)
+                            {
+                                foreach (GioHang gh in lst)
+                                {
+                                    <li>
+                                        <span class="item">
+                                            <span class="item-left">
+                                                <img src="~/Image/@(gh.Ma)_0.png" alt="" width="40"/>
+                                                <span class="item-info">
+                                                    <span>@gh.Ten</span>
+                                                    <span>@gh.Gia <sup>đ</sup></span>
+                                                </span>
+                                            </span>
+                                            <span class="item-right">
+                                                <a class="btn btn-xs btn-danger pull-right" href="~/GioHang/Remove/@gh.Ma">x</a>
+                                            </span>
+                                        </span>
+                                    </li>
+                                }
+                                <li class="divider"></li>
+                                <li><a class="text-center" href="~/ThanhToan/index">Thanh Toán</a></li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content" style="margin-top: 60px">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+    <script src="~/Scripts/npm.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+</body>
+</html>

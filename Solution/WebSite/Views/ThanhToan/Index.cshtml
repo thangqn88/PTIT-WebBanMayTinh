@@ -1,0 +1,98 @@
+﻿@using WebSite.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<GioHang> lst = (List<GioHang>)Session["cart"];
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Danh sản phẩm
+            </div>
+            <div class="panel-body">
+                <form action="~/ThanhToan/ThanhToan" method="post">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Chi tiết</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (lst == null)
+                            {
+                                <tr>
+                                    <td colspan="6">Không có sản phẩm!</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                for (int i = 0; i < lst.Count; i++)
+                                {
+                                    <tr class="text-center">
+                                        <td>@(i + 1)</td>
+                                        <td class="text-left">
+                                            <img src="~/Image/@(lst[i].Ma)_0.png" style="width: 50px; margin-right: 15px">
+                                            <a href="#">
+                                                <strong>@lst[i].Ten</strong>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <strong id="giasp">@lst[i].Gia</strong>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="masp" value="@lst[i].Ma" />
+                                            <input type="number" class="form-control" min="1" max="5" step="1" value="@lst[i].SoLuong" id="soluong" name="soluong" />
+                                        </td>
+                                        <td>
+                                            <strong id="giatien"></strong>
+                                        </td>
+                                        <td>
+                                            <a href="~/GioHang/Remove/@lst[i].Ma" style="color:red">x</a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+
+
+                    <h5 class="col-12 text-right">
+                        <strong>Thành tiền: <span style="color:red;" id="tongtien"></span><sup>đ</sup></strong>
+                    </h5>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-danger waves-effect waves-light">Thanh toán</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function tinhTien() {
+        var tong = 0;
+        $("tr").each(function () {
+            var sl = parseInt($(this).find("#soluong").val());
+            if (sl <= 0 || sl > 5) sl = 1;
+            var gia = parseInt($(this).find("#giasp").text());
+            tong = parseInt((sl * gia) + tong);
+            if (isNaN(tong)) tong = 0;
+            $(this).find("#giatien").text(sl * gia);
+        });
+        $("#tongtien").text(tong);
+    }
+    $(document).ready(function () {
+        tinhTien();
+        $("table").on("change", "#soluong", function () {
+            tinhTien();
+        });
+    });
+</script>
+

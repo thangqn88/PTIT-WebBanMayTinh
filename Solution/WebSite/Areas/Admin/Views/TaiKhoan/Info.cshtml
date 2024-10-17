@@ -1,0 +1,49 @@
+﻿@using WebSite.Models;
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    TaiKhoan tk = (TaiKhoan)ViewData["info"];
+}
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Thông tin tài khoản</div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="30%">Họ Tên:</th>
+                            <th>@tk.HoTen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tên đăng nhập:</td>
+                            <td>@tk.TenTK</td>
+                        </tr>
+                        <tr>
+                            <td>SĐT:</td>
+                            <td>@tk.SDT</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td>@tk.Email</td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ:</td>
+                            <td>@tk.DiaChi</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
